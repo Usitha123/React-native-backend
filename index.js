@@ -14,13 +14,14 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 // API endpoint to fetch all canteens data without using a schema
 app.get('/api/canteens', async (req, res) => {
   try {
-    const canteens = await mongoose.connection.db.collection('canteens').find().toArray();  // Fetch all documents from canteens collection
-    res.json(canteens);  // Send canteens data as JSON response
+    const canteens = await mongoose.connection.db.collection('canteens').find().toArray();
+    res.json(canteens);
   } catch (err) {
-    console.error('Error fetching canteens:', err);
-    res.status(500).json({ message: 'Error fetching canteens data' });
+    console.error('Error fetching canteens:', err);  // Log the actual error
+    res.status(500).json({ message: 'Error fetching canteens data', error: err });  // Send more detailed error
   }
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
